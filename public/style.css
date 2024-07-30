@@ -17,3 +17,15 @@ body {
     border-bottom-right-radius: 10px;
     transition: width 0.3s ease;
 }
+
+#setup {
+    height: 100%;
+    width: 100%;
+}
+
+#setup-hello {
+    float: right;
+    width: 300px;
+    border: 3px solid #73AD21;
+    padding: 10px;
+}

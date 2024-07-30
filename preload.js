@@ -1,6 +1,5 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
-contextBridge.exposeInMainWorld('mouse', {
-  in: () => ipcRenderer.invoke('mouseIn'),
-  out: () => ipcRenderer.invoke('mouseOut'),
+contextBridge.exposeInMainWorld('sizeState', {
+  set: (state) => ipcRenderer.invoke('setSizeState', state),
 })
