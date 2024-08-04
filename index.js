@@ -15,7 +15,7 @@ const defaultScales = {
 };
 
 const scales = {
-    "setup": [0.2, 0.25],
+    "setup": [0.2, 0.2],
     "expanded": [0.25, 0.06]
 };
 
@@ -75,44 +75,7 @@ async function registerIPCCallbacks() {
     });
 }
 
-function getMimeType(extension) {
-    const mimeTypes = {
-        '.html': 'text/html',
-        '.js': 'text/javascript',
-        '.css': 'text/css',
-        '.json': 'application/json',
-        '.png': 'image/png',
-        '.jpg': 'image/jpeg',
-        '.gif': 'image/gif',
-        '.svg': 'image/svg+xml',
-        '.wav': 'audio/wav',
-        '.mp4': 'video/mp4',
-        '.woff': 'application/font-woff',
-        '.ttf': 'application/font-ttf',
-        '.eot': 'application/vnd.ms-fontobject',
-        '.otf': 'application/font-otf',
-        '.wasm': 'application/wasm'
-    };
-    return mimeTypes[extension] || 'application/octet-stream';
-}
-
-async function registerProtocol() {
-    protocol.handle('dynnotch', async (request) => {
-        try {
-            const filePath = request.url.slice('dynnotch://'.length);
-            const fullPath = path.join(__dirname, 'assets', filePath);
-            const fileContent = await fs.readFile(fullPath);
-            const mimeType = getMimeType(path.extname(filePath));
-            return new Response(fileContent, { headers: { 'Content-Type': mimeType } });
-        } catch (error) {
-            console.error('Error handling dynnotch protocol:', error);
-            return new Response('Not Found', { status: 404 });
-        }
-    });
-}
-
 app.whenReady().then(async () => {
-    await registerProtocol();
     await registerIPCCallbacks();
 
     const allDisplays = screen.getAllDisplays();
